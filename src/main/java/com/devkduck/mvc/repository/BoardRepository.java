@@ -4,9 +4,13 @@ import org.springframework.stereotype.Repository;
 
 import com.devkduck.mvc.domain.Board;
 
+/*
+ * 게시판 레파지토리
+ */
+
 @Repository
 public interface BoardRepository {
-	
+
 	//게시판 검색
 	List<Board> getList();
 	Board get(int boardSeq);
