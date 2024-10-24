@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.devkduck.mvc.repository.BoardRepository">
+    <select id="getList" parameterType="com.devkduck.mvc.domain.Board" resultType="com.devkduck.mvc.domain.Board">
+        SELECT
+            B.BOARDSEQ,
+            B.TITLE,
+            B.CONTENTS,
+            B.REGDATE
+        FROM
+            T_BOARD B
+        ORDER BY
+            B.REGDATE DESC
+    </select>
+    
+    <select id="get" parameterType="int" resultType="com.devkduck.mvc.domain.Board">
+        SELECT
+            B.BOARDSEQ,
+            B.TITLE,
+            B.CONTENTS,
+            B.REGDATE
+        FROM
+            T_BOARD B
+        WHERE
+            B.BOARDSEQ = #{boardSeq}
+    </select>
+    
+    <insert id="save" parameterType="com.devkduck.mvc.domain.Board">
+        INSERT INTO T_BOARD
+        (
+            TITLE,
+            CONTENTS,
+            REGDATE
+        )
+        VALUES
+        (
+            #{title},
+            #{contents},
+            NOW()
+        )
+    </insert>
+    
+    <update id="update" parameterType="com.devkduck.mvc.domain.Board">
+        UPDATE T_BOARD
+        SET
+            TITLE = #{title},
+            CONTENTS = #{contents}
+        WHERE
+            BOARDSEQ = #{boardSeq}
+    </update>
+    
+    <delete id="delete" parameterType="int">
+        DELETE FROM 
+            T_BOARD
+        WHERE
+            BOARDSEQ = #{boardSeq}
+    </delete>
+</mapper>
