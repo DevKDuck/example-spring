@@ -25,18 +25,15 @@ public class BoardService {
 	}
 	
 	//저장
-	public int save(Board board) {
-		/*
-		 * boardSeq 가 있으면 update,없으면 insert
-		 */
-	Board b = boardRespository.get(board.getBoardSeq());
-	if (b == null) {
-		boardRespository.save(board);
-	}
-	else {
-		boardRespository.update(board);
-	}
-		return board.getBoardSeq();
+	public void save(Board board) {
+		//boardSeq 가 있으면 update,없으면 insert
+		Board b = boardRespository.get(board.getBoardSeq());
+		if (b == null) {
+			boardRespository.save(board);
+		}
+		else {
+			boardRespository.update(board);
+		}
 	}
 	
 	//수정
