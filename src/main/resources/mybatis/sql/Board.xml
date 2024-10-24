@@ -27,7 +27,7 @@
             B.BOARDSEQ = #{boardSeq}
     </select>
     
-    <insert id="save" parameterType="com.devkduck.mvc.domain.Board">
+    <insert id="save" parameterType="com.devkduck.mvc.domain.Board" useGeneratedKeys="true" keyProperty = "boardSeq">
         INSERT INTO T_BOARD
         (
             TITLE,

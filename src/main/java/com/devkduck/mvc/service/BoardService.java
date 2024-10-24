@@ -25,8 +25,9 @@ public class BoardService {
 	}
 	
 	//저장
-	public void save(Board board) {
+	public int save(Board board) {
 		boardRespository.save(board);
+		return board.getBoardSeq();
 	}
 	
 	//수정

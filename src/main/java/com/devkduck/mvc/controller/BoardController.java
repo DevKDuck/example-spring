@@ -35,8 +35,8 @@ public class BoardController {
 	//실무에서 데이터 수정,삭제 put, delete 주로 사용
 	//등록 수정 , 처리
 	@GetMapping("/save")
-	public void save(Board board) {
-		boardService.save(board);
+	public int save(Board board) {
+		return boardService.save(board);
 	}
 	
 	@GetMapping("/delete/{boardSeq}")
