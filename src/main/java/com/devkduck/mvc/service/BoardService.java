@@ -26,14 +26,23 @@ public class BoardService {
 	
 	//저장
 	public int save(Board board) {
+		/*
+		 * boardSeq 가 있으면 update,없으면 insert
+		 */
+	Board b = boardRespository.get(board.getBoardSeq());
+	if (b == null) {
 		boardRespository.save(board);
+	}
+	else {
+		boardRespository.update(board);
+	}
 		return board.getBoardSeq();
 	}
 	
 	//수정
-	public void update(Board board) {
-		boardRespository.update(board);
-	}
+//	public void update(Board board) {
+//		boardRespository.update(board);
+//	}
 	
 	//삭제
 	public void delete(int boardSeq) {
