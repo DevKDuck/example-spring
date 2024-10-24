@@ -1,8 +1,6 @@
-com/devkduck/configuration/DatabaseConfiguration.class
-META-INF/spring-configuration-metadata.json
 com/devkduck/mvc/service/BoardService.class
+com/devkduck/configuration/SwaggerConfiguration.class
 com/devkduck/mvc/repository/BoardRepository.class
 com/devkduck/ExampleSpringApplication.class
 com/devkduck/mvc/domain/Board.class
-com/devkduck/configuration/MybatisConfiguration.class
 com/devkduck/mvc/controller/BoardController.class

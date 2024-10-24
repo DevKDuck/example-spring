@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.devkduck.mvc.domain.Board;
+import com.devkduck.mvc.parameter.BoardParameter;
 import com.devkduck.mvc.repository.BoardRepository;
 
 /*
@@ -25,16 +26,18 @@ public class BoardService {
 	}
 	
 	//저장
-	public void save(Board board) {
-		//boardSeq 가 있으면 update,없으면 insert
-		Board b = boardRespository.get(board.getBoardSeq());
-		if (b == null) {
-			boardRespository.save(board);
-		}
-		else {
-			boardRespository.update(board);
-		}
+	public void save(BoardParameter board) {
+		int boardSeq = board.getBoardSeq();
+	    Board b = boardRespository.get(boardSeq);
+	    if (b == null) {
+	        System.out.println("Inserting new board...");
+	        boardRespository.save(board);
+	    } else {
+	        System.out.println("Updating existing board...");
+	        boardRespository.update(board);
+	    }
 	}
+
 	
 	//수정
 //	public void update(Board board) {

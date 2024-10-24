@@ -1,6 +1,7 @@
 /Users/duck/Desktop/sts4-workspace/example-spring/src/main/java/com/devkduck/ExampleSpringApplication.java
 /Users/duck/Desktop/sts4-workspace/example-spring/src/main/java/com/devkduck/configuration/DatabaseConfiguration.java
 /Users/duck/Desktop/sts4-workspace/example-spring/src/main/java/com/devkduck/configuration/MybatisConfiguration.java
+/Users/duck/Desktop/sts4-workspace/example-spring/src/main/java/com/devkduck/configuration/SwaggerConfiguration.java
 /Users/duck/Desktop/sts4-workspace/example-spring/src/main/java/com/devkduck/mvc/controller/BoardController.java
 /Users/duck/Desktop/sts4-workspace/example-spring/src/main/java/com/devkduck/mvc/domain/Board.java
 /Users/duck/Desktop/sts4-workspace/example-spring/src/main/java/com/devkduck/mvc/repository/BoardRepository.java

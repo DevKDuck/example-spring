@@ -1,6 +1,6 @@
 package com.devkduck.mvc.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import lombok.Data;
 
@@ -9,5 +9,5 @@ public class Board {
 	private int boardSeq;
 	private String title;
 	private String contents;
-	private Date regDate;
+	private LocalDateTime regDate;
 }
