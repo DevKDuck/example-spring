@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devkduck.configuration.http.BaseResponse;
 import com.devkduck.mvc.domain.Board;
 import com.devkduck.mvc.parameter.BoardParameter;
 import com.devkduck.mvc.service.BoardService;
@@ -17,7 +18,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
 /*
  * 게시판 컨트롤러
  */
@@ -33,8 +33,8 @@ public class BoardController {
 	//게시판 검색
 	@GetMapping
 	@Operation(summary = "목록 조회", description = "게시물 목록을 조회합니다.")
-	public List<Board> getList(){
-		return boardService.getList();
+	public BaseResponse<List<Board>> getList(){
+		return new BaseResponse<List<Board>>(boardService.getList());
 	}
 	
 	@GetMapping("/{boardSeq}")
@@ -42,8 +42,8 @@ public class BoardController {
 		parameters = { 
 				@Parameter(name = "boardSeq", description = "게시물 번호", required = true, example = "1")
 		})
-	public Board get(@PathVariable int boardSeq) {
-		return boardService.get(boardSeq);
+	public BaseResponse<Board> get(@PathVariable int boardSeq) {
+		return new BaseResponse<Board>(boardService.get(boardSeq));
 	}
 	
 	//실무에서 데이터 수정,삭제 put, delete 주로 사용
@@ -55,9 +55,9 @@ public class BoardController {
 			@Parameter(name = "title", description = "제목", example = "spring_title"),
 			@Parameter(name = "contents", description = "내용", example = "spring_contents")
 	})
-	public int save(@RequestBody BoardParameter board) {
+	public BaseResponse<Integer> save(@RequestBody BoardParameter board) {
 		boardService.save(board);
-		return board.getBoardSeq();
+		return new BaseResponse<Integer>(board.getBoardSeq());
 	}
 	
 	@DeleteMapping("/delete/{boardSeq}")
@@ -65,13 +65,13 @@ public class BoardController {
 	parameters = { 
 			@Parameter(name = "boardSeq", description = "게시물 번호", example = "1"),
 	})
-	public boolean delete(@PathVariable int boardSeq) {
+	public BaseResponse<Boolean> delete(@PathVariable int boardSeq) {
 		Board board = boardService.get(boardSeq);
 		if(board==null) {
-			return false;
+			return new BaseResponse<Boolean>(false);
 		}	
 		boardService.delete(boardSeq);
-		return true;
+		return new BaseResponse<Boolean>(true);
 	}
 
 }
