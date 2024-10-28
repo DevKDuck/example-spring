@@ -1,6 +1,8 @@
 package com.devkduck.mvc.controller;
 
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +11,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devkduck.configuration.exception.BaseException;
 import com.devkduck.configuration.http.BaseResponse;
+import com.devkduck.configuration.http.BaseResponseCode;
 import com.devkduck.mvc.domain.Board;
 import com.devkduck.mvc.parameter.BoardParameter;
 import com.devkduck.mvc.service.BoardService;
@@ -43,7 +47,12 @@ public class BoardController {
 				@Parameter(name = "boardSeq", description = "게시물 번호", required = true, example = "1")
 		})
 	public BaseResponse<Board> get(@PathVariable int boardSeq) {
-		return new BaseResponse<Board>(boardService.get(boardSeq));
+		Board board = boardService.get(boardSeq);
+		if(board == null) {
+			throw new BaseException(BaseResponseCode.DATA_IS_NULL, new String[] {"게시물"});
+		}
+//		return new BaseResponse<Board>(boardService.get(boardSeq));
+		return new BaseResponse<Board>(board);
 	}
 	
 	//실무에서 데이터 수정,삭제 put, delete 주로 사용
@@ -55,9 +64,18 @@ public class BoardController {
 			@Parameter(name = "title", description = "제목", example = "spring_title"),
 			@Parameter(name = "contents", description = "내용", example = "spring_contents")
 	})
-	public BaseResponse<Integer> save(@RequestBody BoardParameter board) {
-		boardService.save(board);
-		return new BaseResponse<Integer>(board.getBoardSeq());
+	public BaseResponse<Integer> save(@RequestBody BoardParameter parameter) {
+		
+		//제목 필수 체크
+		if(StringUtils.isEmpty(parameter.getTitle())) {
+			throw new BaseException(BaseResponseCode.VALIDATE_REQUIRED, new String[] {"title", "제목"});
+		}
+		
+		if(StringUtils.isEmpty(parameter.getContents())) {
+			throw new BaseException(BaseResponseCode.VALIDATE_REQUIRED, new String[] {"contents", "내용"});
+		}
+		boardService.save(parameter);
+		return new BaseResponse<Integer>(parameter.getBoardSeq());
 	}
 	
 	@DeleteMapping("/delete/{boardSeq}")
