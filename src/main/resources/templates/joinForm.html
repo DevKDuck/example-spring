@@ -8,11 +8,10 @@
 <h1>회원가입</h1>
 <hr/>
 <form id="joinForm">
-    아이디: <input type="text" id="username" name="username"> <br/>
+    이메일: <input type="text" id="email" name="email">  <br/>
     비밀번호: <input type="password" id="password" name="password">  <br/>
     비밀번호 확인: <input type="password" id="confirm" name="confirm">  <br/>
     이름: <input type="text" id="name" name="name">  <br/>
-    이메일: <input type="email" id="email" name="email">  <br/>
     핸드폰 번호: <input type="text" id="phoneNumber" name="phoneNumber">  <br/>
     <button type="button" onclick="submitForm(event)">회원가입</button>
 </form>
@@ -21,10 +20,9 @@
     function submitForm(event) {
         event.preventDefault();
         const data = {
-            username: document.getElementById('username').value,
+            email: document.getElementById('email').value,
             password: document.getElementById('password').value,
             name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
             phoneNumber: document.getElementById('phoneNumber').value
         };
 
@@ -36,7 +34,16 @@
             body: JSON.stringify(data)
         })
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(resData => {
+                if(resData.code = 200){
+                    alert('회원가입이 완료되었습니다.');
+                    window.location.href = '/loginForm';
+                }
+                else{
+                    alert('회원가입 실패');
+                }
+
+            })
             .catch(err => console.error(err));
     }
 </script>

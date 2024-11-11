@@ -3,12 +3,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.devkduck.user.mapper.UserMapper">
-    <select id="findByUsername" resultType="com.devkduck.user.domain.User">
-        SELECT * FROM user WHERE username = #{username}
+    <select id="findByEmail" resultType="com.devkduck.user.domain.User">
+        SELECT * FROM user WHERE email = #{email}
     </select>
 
     <insert id="save" parameterType="com.devkduck.user.domain.User" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user (username, password, name, email, phoneNumber, role)
-        VALUES (#{username}, #{password}, #{name}, #{email}, #{phoneNumber}, #{role});
+        INSERT INTO user (password, name, email, phoneNumber, role)
+        VALUES ( #{password}, #{name}, #{email}, #{phoneNumber}, #{role});
     </insert>
 </mapper>
