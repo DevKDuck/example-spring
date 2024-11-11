@@ -12,7 +12,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 
-@MapperScan(basePackages = "com.devkduck.mvc.repository")
+@MapperScan(basePackages = "com.devkduck.user.mapper")
 @SpringBootApplication
 public class ExampleSpringApplication {
 
