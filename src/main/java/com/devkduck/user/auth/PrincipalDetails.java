@@ -22,8 +22,7 @@ public class PrincipalDetails implements UserDetails {
         collect.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                System.out.println(user.getRole().getKey());
-
+                System.out.println("Getting authority: " + user.getRole().getKey());
                 return user.getRole().getKey();
             }
         });

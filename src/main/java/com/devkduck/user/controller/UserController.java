@@ -4,7 +4,6 @@ package com.devkduck.user.controller;
 import com.devkduck.common.CustomResponse;
 import com.devkduck.user.domain.UserRegisterDTO;
 import com.devkduck.user.service.PrincipalDetailsService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -41,7 +40,11 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // 인증 정보가 있고, 인증된 상태인지 확인
-        if (authentication != null && authentication.isAuthenticated()) {
+        if (authentication != null) {
+            System.out.println("null <<< 아직 존재해:" +authentication.getPrincipal());
+            if (authentication.isAuthenticated()){
+                System.out.println("아직 인증이 되어 있음");
+            }
             // 로그인 상태이므로 사용자 정보를 반환 (예: 사용자명)
             String username = authentication.getName();
             return CustomResponse.ok("로그인 상태입니다.", username);

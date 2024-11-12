@@ -33,6 +33,14 @@ public class SecurityConfig {
                                         .loginProcessingUrl("/login") // login 호출시 시큐리티가 낚아채서 대신 로그인
                                         .defaultSuccessUrl("/")
                 )
+                .logout( lo -> lo
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/loginForm")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .clearAuthentication(true)
+                        .permitAll()
+                )
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
