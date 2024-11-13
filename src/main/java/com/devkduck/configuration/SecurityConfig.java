@@ -23,7 +23,8 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(
                         authorizeRequestCustomizer -> authorizeRequestCustomizer
-                                .requestMatchers("/user/**").authenticated()
+                                .requestMatchers("/loginForm").permitAll()
+                                .requestMatchers("/user/**").hasRole("USER")
                                 .anyRequest().permitAll()
                 )
                 .formLogin(

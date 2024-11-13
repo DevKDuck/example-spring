@@ -1,7 +1,7 @@
 package com.devkduck.user.domain;
 
 
-import com.devkduck.user.constant.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +23,7 @@ public class User {
     private boolean accountNonExpired; // 계정 만료 여부
     private boolean credentialsNonExpired; // 자격 증명 만료 여부
     private boolean accountNonLocked; // 계정 잠김 여부
-    private Role role; // 권한 (예: "ROLE_USER,ROLE_ADMIN")
+    private String role; // 권한 (예: "ROLE_USER,ROLE_ADMIN")
     private String provider; // 소셜 로그인 제공자 (예: "kakao")
     private String providerId; // 소셜 로그인 사용자 ID
     private String profileImageUrl; // 프로필 이미지 URL
@@ -38,7 +38,7 @@ public class User {
                 .name(userRegisterDTO.getName())
                 .email(userRegisterDTO.getEmail())
                 .phoneNumber(userRegisterDTO.getPhoneNumber())
-                .role(Role.USER)
+                .role("ROLE_USER")
                 .build();
     }
 }

@@ -1,36 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>main</title>
+
 </head>
 <body>
-<h1 align="center">main 페이지 입니다.</h1>
-<div th:text="${#authentication.getPrincipal()}">
-    The value of the "name" property of the authentication object should appear here.1
-</div>
-<div th:text="${#authentication.name}">
-    The value of the "name" property of the authentication object should appear here.2
-</div>
-<span th:text="${#authentication.principal().get}"></span>
-<th:block sec:authorize="isAuthenticated() and !isAnonymous()">
-    <div align="right">
-        <h2><span sec:authentication="Principal.email"></span>님 환영합니다!</h2>
-        <h2><span sec:authentication="Principal.memberNo"></span>님 환영합니다!</h2>
-        <button onclick="location.href='/logout'">로그아웃</button>
-    </div>
-</th:block>
-
-<!-- 권한이 없는 사용자일 경우 -->
-<th:block sec:authorize="isAnonymous()">
-    <div align="right">
-        <h3>로그인이 필요한 서비스입니다.</h3>
-        <button onclick="location.href='/loginForm'">로그인</button>
-        <button>회원가입</button>
-    </div>
-</th:block>
+<h1> index</h1>
 
 </body>
 </html>
