@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+</head>
+<body>
+<!-- 헤더 부분을 포함 -->
+<div th:replace="fragments/header :: header"></div>
+
+<h1>tip</h1>
+
+<h2> Tip 게시판 등록 </h2>
+<form id = "tipForm">
+    <label for = tipTitle> 제목 </label>
+    <input type="text" name="tipTitle" id="tipTitle">
+
+    <hr/>
+    <label for = tipContents> 내용 </label>
+    <input type="text" name="tipContents" id="tipContents">
+
+    <button type ="submit"> 꿀팁 등록</button>
+
+</form>
+</body>
+<script>
+    document.getElementById('tipForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        fetch('api/tip/insert',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                tipTitle: document.getElementById('tipTitle').value,
+                tipContents: document.getElementById('tipContents').value
+            })
+        })
+            .then(resData => {
+                console.log(resData)
+                if(resData.status = 200) {
+                    alert('게시글이 등록되었습니다.');
+                    window.location.href = '/tipBoard';
+                }
+                else{
+                    alert('게시판 등록 실패');
+                }
+            })
+
+    })
+
+</script>
+</html>

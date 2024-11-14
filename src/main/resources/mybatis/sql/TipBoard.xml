@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.devkduck.TipBoard.Mapper.TipBoardMapper">
+
+    <insert id="insertTip" parameterType="com.devkduck.TipBoard.domain.TipBoard" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tip_board (tipTitle, tipWriter, tipContents, userId)
+        VALUES ( #{tipTitle}, #{tipWriter}, #{tipContents}, #{userId});
+    </insert>
+</mapper>

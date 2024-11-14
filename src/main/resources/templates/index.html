@@ -1,0 +1,19 @@
+<!-- src/main/resources/templates/index.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>아빠의 농장</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+</head>
+<body>
+<!-- 헤더 부분을 포함 -->
+<div th:replace="fragments/header :: header"></div>
+
+<!-- 페이지 본문 내용 -->
+<div>
+    <h1>홈페이지에 오신 것을 환영합니다!</h1>
+    <p>여기에서 다양한 정보를 확인하실 수 있습니다.</p>
+</div>
+</body>
+</html>
