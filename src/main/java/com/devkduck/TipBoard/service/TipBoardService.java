@@ -22,4 +22,13 @@ public class TipBoardService {
     public List<TipBoard> getTipList() {
         return tipBoardMapper.getTipList();
     }
+
+    public TipBoard detailTip(Long id){
+        //조회수 +1
+        tipBoardMapper.updateHits(id);
+
+        //정보 가져오기
+        TipBoard tip = tipBoardMapper.detailTip(id);
+        return tip;
+    }
 }

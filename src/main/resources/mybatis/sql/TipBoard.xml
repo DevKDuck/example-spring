@@ -25,4 +25,29 @@
 
     </select>
 
+    <update id = "updateHits" parameterType="Long">
+        UPDATE
+            tip_board
+        SET
+            tipHits = tipHits + 1
+        WHERE
+            id = #{id}
+
+    </update>
+
+    <select id="detailTip" resultType="com.devkduck.TipBoard.domain.TipBoard" parameterType="Long">
+        SELECT
+            id
+             , tipTitle
+             , tipContents
+             , tipHits
+             , createdAt
+             , updatedAt
+             , tipWriter
+        FROM
+            tip_board
+        WHERE
+            id = #{id}
+    </select>
+
 </mapper>

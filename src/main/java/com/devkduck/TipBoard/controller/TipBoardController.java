@@ -38,4 +38,11 @@ public class TipBoardController {
         List<TipBoard> tipList = tipBoardService.getTipList();
         return CustomResponse.ok("꿀팁 게시물 조회 성공", tipList);
     }
+
+
+    @GetMapping("/detail/{id}")
+    public CustomResponse detailTip(@PathVariable Long id){
+        TipBoard tip = tipBoardService.detailTip(id);
+        return CustomResponse.ok("조회성공:" + id, tip);
+    }
 }

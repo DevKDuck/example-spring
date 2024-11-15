@@ -11,4 +11,8 @@ public interface TipBoardMapper {
     int insertTip(TipBoard tipBoard);
     //꿀팁 리스트 가져오기
     List<TipBoard> getTipList();
+    //조회수 증가
+    void updateHits(Long id);
+    //자세히 보기
+    TipBoard detailTip(Long id);
 }
