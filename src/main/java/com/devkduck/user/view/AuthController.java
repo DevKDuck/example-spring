@@ -40,10 +40,6 @@ public class AuthController {
         return "" + principalDeatils.getUser();
     }
 
-    @GetMapping("/user/hi")
-    public String userHi(){return "hi";}
-
-
     @GetMapping("/")
     public String home(){return "index";}
 

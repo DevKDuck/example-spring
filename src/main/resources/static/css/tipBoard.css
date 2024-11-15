@@ -14,48 +14,6 @@ body {
     text-align: center;
 }
 
-/* header 스타일 */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #f8f8f8;
-}
-
-.header-title {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.login-button {
-    font-size: 16px;
-    padding: 5px 10px;
-    background-color: #6A24FE;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* 네비게이션 바 스타일 */
-.nav-bar {
-    margin-top: 10px;
-    background-color: #333;
-    overflow: hidden;
-}
-
-.nav-bar a {
-    color: white;
-    padding: 14px 20px;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.nav-bar a:hover {
-    background-color: #575757;
-}
-
 /* 컨테이너 스타일 */
 .container {
     display: flex;

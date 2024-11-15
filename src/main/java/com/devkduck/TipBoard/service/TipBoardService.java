@@ -7,6 +7,8 @@ import com.devkduck.TipBoard.dto.TipResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TipBoardService {
@@ -16,5 +18,8 @@ public class TipBoardService {
     public int insertTip(TipRequestDTO tipRequestDTO, Long userId, String userName) {
         TipBoard tipBoard = TipBoard.createTip(tipRequestDTO, userId, userName);
         return tipBoardMapper.insertTip(tipBoard);
+    }
+    public List<TipBoard> getTipList() {
+        return tipBoardMapper.getTipList();
     }
 }

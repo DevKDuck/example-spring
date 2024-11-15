@@ -4,11 +4,61 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/tipBoard.css}" />
+    <div th:replace="~{fragments/header :: header}"></div>
+
+
 <!-- 헤더 부분을 포함 -->
-<div th:replace="fragments/header :: header"></div>
+
 </head>
 <body>
-Tipboard
+<h1> 꿀팁 게시판 </h1>
+<!--<div class = "container">-->
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>제목</th>
+                <th>꿀팁</th>
+                <th>조회수</th>
+                <th>작성일</th>
+                <th>수정일</th>
+                <th>작성자</th>
+            </tr>
+        </thead>
+        <tbody id = "tipTableBody">
+        </tbody>
+    </table>
+<!--</div>-->
 <a href="/tipForm">tip 추가</a>
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        fetch('/api/tip/list')
+            .then(res => res.json())
+            .then(resData => {
+                if (resData.code === 200){
+                    const tipList = resData.data;
+                    const tableBody = document.getElementById('tipTableBody');
+
+                    tipList.forEach(tip => {
+                        const row = document.createElement('tr');
+                        row.innerHTML  = `
+                                <td>${tip.id}</td>
+                                <td>${tip.tipTitle}</td>
+                                <td>${tip.tipContents}</td>
+                                <td>${tip.tipHits}</td>
+                                <td>${tip.createdAt}</td>
+                                <td>${tip.updatedAt}</td>
+                                <td>${tip.tipWriter}</td>
+                            `;
+                        tableBody.appendChild(row);
+                    })
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    })
+
+</script>
 </html>

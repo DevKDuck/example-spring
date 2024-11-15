@@ -1,6 +1,7 @@
 package com.devkduck.TipBoard.controller;
 
 
+import com.devkduck.TipBoard.domain.TipBoard;
 import com.devkduck.TipBoard.dto.TipRequestDTO;
 import com.devkduck.TipBoard.service.TipBoardService;
 import com.devkduck.common.CustomResponse;
@@ -8,6 +9,9 @@ import com.devkduck.user.auth.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/tip")
@@ -27,6 +31,11 @@ public class TipBoardController {
         else{
             return CustomResponse.failure("등록실패");
         }
+    }
 
+    @GetMapping("/list")
+    public CustomResponse listTip(){
+        List<TipBoard> tipList = tipBoardService.getTipList();
+        return CustomResponse.ok("꿀팁 게시물 조회 성공", tipList);
     }
 }

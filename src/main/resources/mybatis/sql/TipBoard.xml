@@ -8,4 +8,21 @@
         INSERT INTO tip_board (tipTitle, tipWriter, tipContents, userId)
         VALUES ( #{tipTitle}, #{tipWriter}, #{tipContents}, #{userId});
     </insert>
+
+    <select id="getTipList" resultType="com.devkduck.TipBoard.domain.TipBoard">
+        SELECT
+            id
+             , tipTitle
+             , tipContents
+             , tipHits
+             , createdAt
+             , updatedAt
+             , tipWriter
+        FROM
+            tip_board
+        ORDER BY
+            id desc
+
+    </select>
+
 </mapper>
