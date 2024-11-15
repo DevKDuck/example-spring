@@ -53,6 +53,15 @@
                                 <td>${tip.updatedAt}</td>
                                 <td>${tip.tipWriter}</td>
                             `;
+                        row.setAttribute('data-id', tip.id);  // 각 row에 data-id 속성 추가
+                        row.style.cursor = 'pointer';  // 클릭 가능한 느낌을 주기 위해 커서 변경
+
+                        // 클릭 이벤트 추가
+                        row.addEventListener('click', function() {
+                            const tipId = row.getAttribute('data-id');
+                            window.location.href = `/tip/detail/${tipId}`;  // 상세 페이지로 이동
+                        });
+
                         tableBody.appendChild(row);
                     })
                 }
