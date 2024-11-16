@@ -1,9 +1,11 @@
 package com.devkduck.TipBoard.Mapper;
 
 import com.devkduck.TipBoard.domain.TipBoard;
+import com.devkduck.TipBoard.dto.TipRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface TipBoardMapper {
@@ -15,4 +17,6 @@ public interface TipBoardMapper {
     void updateHits(Long id);
     //자세히 보기
     TipBoard detailTip(Long id);
+    //꿑팁 업데이트
+    int updateTip(Map<String,Object> params);
 }

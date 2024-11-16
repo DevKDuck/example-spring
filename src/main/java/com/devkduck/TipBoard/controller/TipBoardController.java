@@ -45,4 +45,16 @@ public class TipBoardController {
         TipBoard tip = tipBoardService.detailTip(id);
         return CustomResponse.ok("조회성공:" + id, tip);
     }
+
+    @PutMapping("/update/{id}")
+    public CustomResponse updateTip(@PathVariable Long id, @RequestBody TipRequestDTO tipRequestDTO){
+        int success = tipBoardService.updateTip(id, tipRequestDTO);
+        if(success >0){
+            return CustomResponse.ok("수정성공", id);
+        }
+        else{
+            return CustomResponse.failure("수정실패");
+        }
+
+    }
 }

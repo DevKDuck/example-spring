@@ -50,4 +50,14 @@
             id = #{id}
     </select>
 
+    <update id = "updateTip" parameterType="map" >
+    UPDATE
+        tip_board
+    SET
+        tipTitle = #{tipTitle}
+        ,tipContents = #{tipContents}
+    WHERE
+        id = #{id}
+    </update>
+
 </mapper>
