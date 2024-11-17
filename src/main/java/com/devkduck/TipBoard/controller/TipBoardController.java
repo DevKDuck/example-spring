@@ -55,6 +55,16 @@ public class TipBoardController {
         else{
             return CustomResponse.failure("수정실패");
         }
+    }
+    @DeleteMapping("/delete/{id}")
+    public CustomResponse deleteTip(@PathVariable Long id){
+        int success = tipBoardService.deleteTip(id);
+        if (success >0){
+            return CustomResponse.ok("삭제 성공",id);
+        }
+        else{
+            return CustomResponse.failure("삭제 실패");
+        }
 
     }
 }

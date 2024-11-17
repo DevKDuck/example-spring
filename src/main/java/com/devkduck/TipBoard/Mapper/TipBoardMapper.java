@@ -19,4 +19,6 @@ public interface TipBoardMapper {
     TipBoard detailTip(Long id);
     //꿑팁 업데이트
     int updateTip(Map<String,Object> params);
+    //꿀팁 삭제
+    int deleteTip(Long id);
 }

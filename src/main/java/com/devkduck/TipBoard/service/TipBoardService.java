@@ -43,4 +43,8 @@ public class TipBoardService {
         params.put("tipContents", tipRequestDTO.getTipContents());
         return tipBoardMapper.updateTip(params);
     }
+
+    public int deleteTip(Long id){
+        return tipBoardMapper.deleteTip(id);
+    }
 }

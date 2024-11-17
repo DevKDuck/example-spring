@@ -60,4 +60,11 @@
         id = #{id}
     </update>
 
+    <delete id = "deleteTip" parameterType="Long">
+        DELETE FROM
+               tip_board
+        WHERE
+            id = #{id}
+    </delete>
+
 </mapper>

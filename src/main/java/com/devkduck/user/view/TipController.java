@@ -25,4 +25,11 @@ public class TipController {
         return "/tipDetail";
     }
 
+    @GetMapping("/tip/update/{tipId}")
+    public String tipUpdate(@PathVariable("tipId") Long tipId, Model model){
+        System.out.println(tipId);
+        model.addAttribute("tipId", tipId);
+        return "/tipUpdate";
+    }
+
 }
