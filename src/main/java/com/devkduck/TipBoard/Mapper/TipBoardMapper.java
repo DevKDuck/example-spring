@@ -21,4 +21,6 @@ public interface TipBoardMapper {
     int updateTip(Map<String,Object> params);
     //꿀팁 삭제
     int deleteTip(Long id);
+    //꿀팁 작성자 Id 검색
+    TipBoard findAllById(Long id);
 }

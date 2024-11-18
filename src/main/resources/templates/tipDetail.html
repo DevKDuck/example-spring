@@ -1,19 +1,95 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tip Detail</title>
     <link rel="stylesheet" th:href="@{/css/header.css}" />
     <div th:replace="~{fragments/header :: header}"></div>
+    <style>
+
+    </style>
 </head>
 <body>
-<p>Tip ID: <span th:text="${tipId}"></span></p>
+<p>Tip tipId: <span id="tipId" th:text="${tipId}"></span></p>
 
+    <p>Tip ID: <span id="id" ></span></p>
+    <p>Tip tipTitle: <span id="tipTitle" ></span></p>
+    <p>Tip tipContents: <span id="tipContents" ></span></p>
+    <p>Tip tipHits: <span id="tipHits" ></span></p>
+    <p>Tip createdAt: <span id="createdAt" ></span></p>
+    <p>Tip updatedAt: <span id="updatedAt" ></span></p>
+    <p>Tip tipWriter: <span id="tipWriter"></span></p>
 
+    <button id="update_btn" type="submit" style="display: none">수정</button>
+    <button id="delete_btn" type="submit" style="display: none">삭제</button>
 
 
 </body>
-</html>
+
 <script>
 
+    document.addEventListener('DOMContentLoaded', function() {
+        const tipIdElement = document.getElementById('tipId');
+        const updateBtn = document.getElementById('update_btn');
+        const deleteBtn = document.getElementById('delete_btn');
+        const tipId = tipIdElement.textContent; // Tip ID 값을 가져옴
+
+        const id = document.getElementById('id');
+        const tipTitle = document.getElementById('tipTitle');
+        const tipContents = document.getElementById('tipContents');
+        const tipHits = document.getElementById('tipHits');
+        const createdAt = document.getElementById('createdAt');
+        const updatedAt = document.getElementById('updatedAt');
+        const tipWriter = document.getElementById('tipWriter');
+updateBtn.addEventListener('click',function (){
+    window.location.href = `/tip/update/${tipId}`
+})
+        // updateBtn.addEventListener('click',function(){
+        //     fetch(`/tip/update/${tipId}`,{
+        //         method: 'POST',
+        //         headers:{
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({
+        //             tipId: id,
+        //             tipTitle: tipTitle,
+        //             tipContents: tipContents
+        //         })
+        //     })
+        //     .then(response => response.json())
+        //     .catch(err=>console.error('Error',err));
+        // })
+
+        fetch(`/api/tip/detail/${tipId}`)
+            .then(res => res.json())
+            .then(resData => {
+                id.textContent = resData.data.id;
+                tipTitle.textContent = resData.data.tipTitle;
+                tipContents.textContent = resData.data.tipContents;
+                tipHits.textContent = resData.data.tipHits;
+                createdAt.textContent = resData.data.createdAt;
+                updatedAt.textContent = resData.data.updatedAt;
+                tipWriter.textContent = resData.data.tipWriter;
+
+                if (resData.code === 401) { // 로그인하지 않은 사용자
+                    updateBtn.style.display = 'none';
+                    deleteBtn.style.display = 'none';
+                } else if (resData.code === 403) { // 작성자 불일치
+                    updateBtn.style.display = 'none';
+                    deleteBtn.style.display = 'none';
+                } else if (resData.code === 200) { // 작성자와 사용자 일치
+                    updateBtn.style.display = 'block';
+                    deleteBtn.style.display = 'block';
+                }
+                console.log(resData)
+            })
+            .catch(err => {
+                console.error('Error:', err);
+                updateBtn.style.display = 'none'; // 에러 발생 시 기본적으로 숨기기
+            });
+    });
+
+
+
 </script>
+</html>

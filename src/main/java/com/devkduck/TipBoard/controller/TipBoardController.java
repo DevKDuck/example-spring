@@ -41,13 +41,29 @@ public class TipBoardController {
 
 
     @GetMapping("/detail/{id}")
-    public CustomResponse detailTip(@PathVariable Long id){
+    public CustomResponse detailTip(@PathVariable Long id, @AuthenticationPrincipal PrincipalDetails principalDetails){
         TipBoard tip = tipBoardService.detailTip(id);
-        return CustomResponse.ok("조회성공:" + id, tip);
+        try{
+            Long userId = principalDetails.getUser().getId();
+
+            if(userId.equals(tip.getUserId())){
+                return CustomResponse.ok("작성자와 사용자 일치", tip);
+            }else{
+                return CustomResponse.forbidden("작성자와 사용자 불일치", tip);
+            }
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            return CustomResponse.unauthorized("로그인 하지 않은 사용자", tip);
+        }
+
+
     }
 
+
     @PutMapping("/update/{id}")
-    public CustomResponse updateTip(@PathVariable Long id, @RequestBody TipRequestDTO tipRequestDTO){
+    public CustomResponse updateTip(@PathVariable Long id, @RequestBody TipRequestDTO tipRequestDTO) {
+        System.out.println(tipRequestDTO.getTipTitle());
         int success = tipBoardService.updateTip(id, tipRequestDTO);
         if(success >0){
             return CustomResponse.ok("수정성공", id);
@@ -55,6 +71,7 @@ public class TipBoardController {
         else{
             return CustomResponse.failure("수정실패");
         }
+
     }
     @DeleteMapping("/delete/{id}")
     public CustomResponse deleteTip(@PathVariable Long id){

@@ -19,10 +19,7 @@
             <tr>
                 <th>#</th>
                 <th>제목</th>
-                <th>꿀팁</th>
                 <th>조회수</th>
-                <th>작성일</th>
-                <th>수정일</th>
                 <th>작성자</th>
             </tr>
         </thead>
@@ -47,10 +44,7 @@
                         row.innerHTML  = `
                                 <td>${tip.id}</td>
                                 <td>${tip.tipTitle}</td>
-                                <td>${tip.tipContents}</td>
                                 <td>${tip.tipHits}</td>
-                                <td>${tip.createdAt}</td>
-                                <td>${tip.updatedAt}</td>
                                 <td>${tip.tipWriter}</td>
                             `;
                         row.setAttribute('data-id', tip.id);  // 각 row에 data-id 속성 추가

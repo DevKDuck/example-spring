@@ -83,8 +83,9 @@
 <div th:replace="~{fragments/header :: header}"></div>
 
 
-<h1> Tip 게시판 등록 </h1>
+<h1> Tip 게시판 수정 </h1>
 <form id = "tipForm">
+    <p>Tip tipId: <span id="tipId" th:text="${tipId}"></span></p>
     <label for = tipTitle> 제목 </label>
     <input type="text" name="tipTitle" id="tipTitle">
 
@@ -92,16 +93,18 @@
     <label for = tipContents> 내용 </label>
     <input type="text" name="tipContents" id="tipContents">
 
-    <button type ="submit"> 꿀팁 등록</button>
+    <button type ="submit"> 꿀팁 수정</button>
 
 </form>
 </body>
 <script>
     document.getElementById('tipForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+        const tipIdElement = document.getElementById('tipId');
+        const tipId = tipIdElement.textContent; // Tip ID 값을 가져옴
 
-        fetch('api/tip/insert',{
-            method: 'POST',
+        event.preventDefault();
+        fetch(`/api/tip/update/${tipId}`,{
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -112,12 +115,12 @@
         })
             .then(resData => {
                 console.log(resData)
-                if(resData.status = 200) {
-                    alert('게시글이 등록되었습니다.');
-                    window.location.href = '/tip/list';
+                if(resData.code = 200) {
+                    alert('게시글이 수정되었습니다.');
+                    window.location.href = `/tip/detail/${tipId}`;
                 }
                 else{
-                    alert('게시판 등록 실패');
+                    alert('게시판 수정 실패');
                 }
             })
 

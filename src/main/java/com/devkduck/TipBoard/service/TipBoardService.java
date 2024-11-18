@@ -47,4 +47,8 @@ public class TipBoardService {
     public int deleteTip(Long id){
         return tipBoardMapper.deleteTip(id);
     }
+
+    public TipBoard findAllById(Long id){
+        return tipBoardMapper.findAllById(id);
+    }
 }

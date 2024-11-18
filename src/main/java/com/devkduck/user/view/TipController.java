@@ -1,23 +1,31 @@
 package com.devkduck.user.view;
 
+import com.devkduck.TipBoard.dto.TipRequestDTO;
+import com.devkduck.TipBoard.service.TipBoardService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
+
 public class TipController {
+
+
+    @GetMapping("/tip/list")
+    public String tipBoard(){
+        return "/tipBoard";
+    }
 
     @GetMapping("/tipForm")
     public String tipForm(){
         return "/tipForm";
     }
 
-    @GetMapping("/tip/list")
-    public String tipBoard(){
-        return "/tipBoard";
-    }
     @GetMapping("/tip/detail/{tipId}")
     public String tipDetail(@PathVariable("tipId") Long tipId, Model model){
         System.out.println(tipId);
@@ -29,7 +37,9 @@ public class TipController {
     public String tipUpdate(@PathVariable("tipId") Long tipId, Model model){
         System.out.println(tipId);
         model.addAttribute("tipId", tipId);
-        return "/tipUpdate";
+//        model.addAttribute("tipTitle", tipRequestDTO.getTipTitle());
+//        model.addAttribute("tipContents", tipRequestDTO.getTipContents());
+        return "/tipUpdateForm";
     }
 
 }
