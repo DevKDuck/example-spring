@@ -47,4 +47,13 @@ public class CustomResponse<T> {
     public static <T> CustomResponse<T> from(T data) {
         return CustomResponse.of(HttpStatus.OK, "Operation successful", data);
     }
+
+    public static <T> CustomResponse<T> unauthorized(String message, T data) {
+        return CustomResponse.of(HttpStatus.UNAUTHORIZED, message, data);
+    }
+
+    public static <T> CustomResponse<T> forbidden(String message, T data) {
+        return CustomResponse.of(HttpStatus.FORBIDDEN, message, data);
+    }
+
 }
