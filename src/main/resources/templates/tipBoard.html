@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,7 +8,21 @@
     <link rel="stylesheet" th:href="@{/css/tipBoard.css}" />
     <div th:replace="~{fragments/header :: header}"></div>
 
-
+<style>
+    button{
+        padding: 10px 20px;
+        font-size: 14px;
+        color: white;
+        background-color: #6A24FE;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px 5px;
+    }
+    button:hover {
+        background-color: #4E1CC3;
+    }
+</style>
 <!-- 헤더 부분을 포함 -->
 
 </head>
@@ -27,7 +42,7 @@
         </tbody>
     </table>
 <!--</div>-->
-<a href="/tipForm">tip 추가</a>
+<button sec:authorize="isAuthenticated()" id="insert_btn" onclick="window.location.href='/tipForm'">꿀팁 추가</button>
 </body>
 
 <script>
