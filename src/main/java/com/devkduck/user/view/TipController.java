@@ -37,8 +37,6 @@ public class TipController {
     public String tipUpdate(@PathVariable("tipId") Long tipId, Model model){
         System.out.println(tipId);
         model.addAttribute("tipId", tipId);
-//        model.addAttribute("tipTitle", tipRequestDTO.getTipTitle());
-//        model.addAttribute("tipContents", tipRequestDTO.getTipContents());
         return "/tipUpdateForm";
     }
 

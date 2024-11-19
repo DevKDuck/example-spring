@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>아빠의 농장</title>
@@ -9,7 +10,11 @@
 <!-- Header를 위한 fragment -->
 <div th:fragment="header">
     <div class="header">
-        <div class="header-title">FARM</div>
+        <a href = "/">
+            <div class="headerTitle" id="headerTitle" style="cursor: pointer">
+                FARM
+            </div>
+        </a>
         <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}">
             <button sec:authorize="isAuthenticated()" class="login-button" type="submit">Logout</button>
             <button sec:authorize="isAnonymous()" th:href="@{/loginForm}" class="login-button" type="submit">Login</button>

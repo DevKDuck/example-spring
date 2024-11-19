@@ -4,26 +4,25 @@
     <meta charset="UTF-8">
     <title>Tip Detail</title>
     <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/detail.css}" />
     <div th:replace="~{fragments/header :: header}"></div>
-    <style>
 
-    </style>
 </head>
 <body>
-<p>Tip tipId: <span id="tipId" th:text="${tipId}"></span></p>
-
-    <p>Tip ID: <span id="id" ></span></p>
-    <p>Tip tipTitle: <span id="tipTitle" ></span></p>
-    <p>Tip tipContents: <span id="tipContents" ></span></p>
-    <p>Tip tipHits: <span id="tipHits" ></span></p>
-    <p>Tip createdAt: <span id="createdAt" ></span></p>
-    <p>Tip updatedAt: <span id="updatedAt" ></span></p>
-    <p>Tip tipWriter: <span id="tipWriter"></span></p>
+<div class="container">
+    <h1>Tip Detail</h1>
+    <p>Tip tipId: <span id="tipId" th:text="${tipId}"></span></p>
+    <p>Tip ID: <span id="id"></span></p>
+    <p>Tip Title: <span id="tipTitle"></span></p>
+    <p>Tip Contents: <span id="tipContents"></span></p>
+    <p>Tip Hits: <span id="tipHits"></span></p>
+    <p>Created At: <span id="createdAt"></span></p>
+    <p>Updated At: <span id="updatedAt"></span></p>
+    <p>Tip Writer: <span id="tipWriter"></span></p>
 
     <button id="update_btn" type="submit" style="display: none">수정</button>
     <button id="delete_btn" type="submit" style="display: none">삭제</button>
-
-
+</div>
 </body>
 
 <script>
@@ -41,9 +40,27 @@
         const createdAt = document.getElementById('createdAt');
         const updatedAt = document.getElementById('updatedAt');
         const tipWriter = document.getElementById('tipWriter');
-updateBtn.addEventListener('click',function (){
-    window.location.href = `/tip/update/${tipId}`
-})
+
+    updateBtn.addEventListener('click',function (){
+        window.location.href = `/tip/update/${tipId}`
+    })
+
+    deleteBtn.addEventListener('click',function (){
+        fetch(`/api/tip/delete/${tipId}`,{
+            method: 'DELETE'
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.code === 200){
+                alert('성공적으로 삭제하였습니다.');
+                window.location.href = '/tip/list';
+            }
+        })
+        .catch(err => {
+            alert('삭제를 실패했습니다 이유:' + err)
+            console.error('Error:', err)
+        });
+    })
         // updateBtn.addEventListener('click',function(){
         //     fetch(`/tip/update/${tipId}`,{
         //         method: 'POST',
