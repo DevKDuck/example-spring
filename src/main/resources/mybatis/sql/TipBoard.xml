@@ -80,4 +80,24 @@
             id = #{id}
     </select>
 
+
+    <select id="getListBoard" parameterType="com.devkduck.common.RequestList" resultType="com.devkduck.TipBoard.domain.TipBoard">
+        SELECT id
+        ,tipTitle
+        ,tipContents
+        ,tipHits
+        ,createdAt
+        ,updatedAt
+        ,tipWriter
+        ,userId
+        FROM tip_board
+        Limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <select id="getListBoardCount" parameterType="com.devkduck.TipBoard.domain.TipBoard" resultType="int">
+        SELECT COUNT(*) AS CNT
+        FROM tip_board
+
+    </select>
+
 </mapper>

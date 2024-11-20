@@ -4,8 +4,13 @@ import com.devkduck.TipBoard.Mapper.TipBoardMapper;
 import com.devkduck.TipBoard.domain.TipBoard;
 import com.devkduck.TipBoard.dto.TipRequestDTO;
 import com.devkduck.TipBoard.dto.TipResponseDTO;
+import com.devkduck.common.RequestList;
+import com.devkduck.mvc.domain.Board;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -50,5 +55,15 @@ public class TipBoardService {
 
     public TipBoard findAllById(Long id){
         return tipBoardMapper.findAllById(id);
+    }
+
+    public Page<Map<String,Object>> getListBoard(TipBoard board, Pageable pageable){
+        RequestList<?> requestList =RequestList.builder()
+                .data(board)
+                .pageable(pageable)
+                .build();
+        List<Map<String,Object>> content = tipBoardMapper.getListBoard(requestList);
+        int total = tipBoardMapper.getListBoardCount(board);
+        return new PageImpl<>(content, pageable, total);
     }
 }

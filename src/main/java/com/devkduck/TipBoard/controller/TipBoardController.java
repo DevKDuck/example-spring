@@ -7,6 +7,8 @@ import com.devkduck.TipBoard.service.TipBoardService;
 import com.devkduck.common.CustomResponse;
 import com.devkduck.user.auth.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,6 +84,12 @@ public class TipBoardController {
         else{
             return CustomResponse.failure("삭제 실패");
         }
-
     }
+
+    //pageable test
+    @GetMapping("/boards")
+    public CustomResponse getListBoards(TipBoard tipBoard, @PageableDefault(size = 10 ) Pageable pageable){
+        return CustomResponse.ok("페이징 ", tipBoardService.getListBoard(tipBoard,pageable));
+    }
+
 }
