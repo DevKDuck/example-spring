@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Tip Board</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/tipBoard.css}" />
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <style>
+        button {
+            padding: 10px 20px;
+            font-size: 14px;
+            color: white;
+            background-color: #6A24FE;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+
+        button:hover {
+            background-color: #4E1CC3;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            margin: 20px 0;
+            padding: 0;
+        }
+        /* 페이지 번호 활성화 시 빨간색으로 강조 */
+        .pagination .page.active {
+            color: red; /* 텍스트 색을 빨갛게 */
+            font-weight: bold; /* 선택된 페이지는 굵게 */
+        }
+
+
+        .pagination li {
+            margin: 0 5px;
+        }
+
+        .pagination li a {
+            display: inline-block;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: blue;
+            font-size: 14px;
+        }
+
+        .pagination li a.active {
+            font-weight: bold;
+            color: red;
+        }
+
+        .pagination li a.disabled {
+            color: gray;
+            pointer-events: none;
+        }
+
+        .page-size-selector {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>꿀팁 게시판</h1>
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>제목</th>
+        <th>조회수</th>
+        <th>작성자</th>
+    </tr>
+    </thead>
+    <tbody id="tipTableBody">
+    </tbody>
+</table>
+
+<!-- 페이지 크기 선택 -->
+<label for="pageSizeSelector">페이지당 항목 수:</label>
+<select id="pageSizeSelector" class="page-size-selector">
+    <option value="10">10개</option>
+    <option value="30">30개</option>
+    <option value="50">50개</option>
+</select>
+
+<!-- 페이지네이션 버튼 영역 -->
+<ul class="pagination" id="pagination">
+    <li><a href="#" id="prev" class="prev"><</a></li>
+    <!-- 페이지 번호 동적으로 생성될 부분 -->
+    <li><a href="#" id="next" class="next">›</a></li>
+</ul>
+
+<button sec:authorize="isAuthenticated()" id="insert_btn" onclick="window.location.href='/tipForm'">꿀팁 추가</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let currentPage = 0;
+        let pageSize = 10;
+        let totalPages = 1; // 전체 페이지 수 초기값
+        let maxPageButtons = 5; // 한 번에 보여줄 최대 페이지 버튼 수
+
+        // 데이터 로드 함수
+        const fetchData = (page, size) => {
+            fetch(`/api/tip/page?page=${page}&size=${size}`)
+                .then(res => res.json())
+                .then(resData => {
+                    if (resData.code === 200) {
+                        const tipList = resData.data.content;
+                        totalPages = resData.data.totalPages; // 전체 페이지 수 업데이트
+
+                        const tableBody = document.getElementById('tipTableBody');
+                        tableBody.innerHTML = '';
+
+                        // 테이블 데이터 추가
+                        tipList.forEach(tip => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                            <td>${tip.id}</td>
+                            <td>${tip.tipTitle}</td>
+                            <td>${tip.tipHits}</td>
+                            <td>${tip.tipWriter}</td>
+                        `;
+                            row.setAttribute('data-id', tip.id);
+                            row.style.cursor = 'pointer';
+
+                            // 클릭 이벤트 추가
+                            row.addEventListener('click', function () {
+                                const tipId = row.getAttribute('data-id');
+                                window.location.href = `/tip/detail/${tipId}`;
+                            });
+
+                            tableBody.appendChild(row);
+                        });
+
+                        // 페이지네이션 업데이트
+                        createPagination(page);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        };
+
+        // 페이지 네비게이션 생성 함수
+        const createPagination = (currentPage) => {
+            const paginationElement = document.getElementById('pagination');
+            const pageSizeSelector = document.getElementById('pageSizeSelector');
+
+            // 페이지 번호 계산
+            let startPage = Math.floor(currentPage / maxPageButtons) * maxPageButtons;
+            let endPage = Math.min(startPage + maxPageButtons - 1, totalPages - 1);
+
+            // 이전/다음 버튼 업데이트
+            // 페이지 번호 버튼 추가
+            paginationElement.innerHTML = ''; // 기존 내용 초기화
+            // 이전 버튼
+            const prevButton = document.createElement('li');
+            prevButton.innerHTML = `<a href="#" id="prev" class="prev" ${currentPage === 0 ? 'class="disabled"' : ''}> < </a>`;
+            paginationElement.appendChild(prevButton);
+
+                // 페이지 번호 버튼
+            for (let i = startPage; i <= endPage; i++) {
+                const pageButton = document.createElement('li');
+                pageButton.innerHTML = `<a href="#" class="page" data-page="${i}" ${i === currentPage ? 'class="active"' : ''}>${i + 1}</a>`;
+                paginationElement.appendChild(pageButton);
+            }
+
+            // 다음 버튼
+            const nextButton = document.createElement('li');
+            nextButton.innerHTML = `<a href="#" id="next" class="next" ${currentPage === totalPages - 1 ? 'class="disabled"' : ''}> > </a>`;
+            paginationElement.appendChild(nextButton);
+
+            // 페이지 버튼 클릭 이벤트
+            document.querySelectorAll('.page').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const selectedPage = parseInt(event.target.getAttribute('data-page'));
+                    fetchData(selectedPage, pageSize);
+                });
+            });
+
+            // 이전 버튼 클릭 이벤트
+            document.getElementById('prev').addEventListener('click', () => {
+                if (currentPage > 0) {
+                    fetchData(currentPage - 1, pageSize);
+                }
+            });
+
+            // 다음 버튼 클릭 이벤트
+            document.getElementById('next').addEventListener('click', () => {
+                if (currentPage < totalPages - 1) {
+                    fetchData(currentPage + 1, pageSize);
+                }
+            });
+
+            // 페이지 크기 변경 이벤트
+            pageSizeSelector.addEventListener('change', (event) => {
+                pageSize = event.target.value;
+                fetchData(0, pageSize);
+            });
+        };
+
+        // 초기 데이터 로드
+        fetchData(currentPage, pageSize);
+    });
+</script>
+</body>
+</html>

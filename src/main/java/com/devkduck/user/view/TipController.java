@@ -40,4 +40,9 @@ public class TipController {
         return "/tipUpdateForm";
     }
 
+    @GetMapping("/tip/page")
+    public String pageBoard(){
+        return "/pageBoard";
+    }
+
 }

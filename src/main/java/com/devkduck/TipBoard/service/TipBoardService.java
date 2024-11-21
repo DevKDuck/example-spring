@@ -58,7 +58,7 @@ public class TipBoardService {
     }
 
     public Page<Map<String,Object>> getListBoard(TipBoard board, Pageable pageable){
-        RequestList<?> requestList =RequestList.builder()
+        RequestList<?> requestList = RequestList.builder()
                 .data(board)
                 .pageable(pageable)
                 .build();

@@ -87,7 +87,7 @@ public class TipBoardController {
     }
 
     //pageable test
-    @GetMapping("/boards")
+    @GetMapping("/page")
     public CustomResponse getListBoards(TipBoard tipBoard, @PageableDefault(size = 10 ) Pageable pageable){
         return CustomResponse.ok("페이징 ", tipBoardService.getListBoard(tipBoard,pageable));
     }
