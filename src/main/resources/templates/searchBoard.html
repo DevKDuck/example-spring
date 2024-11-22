@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Tip Board</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/tipBoard.css}" />
+    <div th:replace="~{fragments/header :: header}"></div>
+
+</head>
+<body>
+    <h1 class = "title"> Tip Search</h1>
+<div>
+    <form action="/api/tip/search">
+        <input type="text" name="searchKey" id="searchKey">
+    <button type = "submit">검색</button>
+    </form>
+</div>
+</body>
+</html>

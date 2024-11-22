@@ -2,6 +2,7 @@ package com.devkduck.TipBoard.Mapper;
 
 import com.devkduck.TipBoard.domain.TipBoard;
 import com.devkduck.TipBoard.dto.TipRequestDTO;
+import com.devkduck.TipBoard.dto.TipSearchDto;
 import com.devkduck.common.RequestList;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -24,6 +25,10 @@ public interface TipBoardMapper {
     int deleteTip(Long id);
     //꿀팁 작성자 Id 검색
     TipBoard findAllById(Long id);
+    //페이징
     List<Map<String,Object>> getListBoard(RequestList<?> requestList);
     int getListBoardCount(TipBoard board );
+
+    //검색 기능
+    List<TipBoard> searchTip(TipSearchDto searchDto);
 }

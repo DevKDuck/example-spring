@@ -3,6 +3,7 @@ package com.devkduck.TipBoard.controller;
 
 import com.devkduck.TipBoard.domain.TipBoard;
 import com.devkduck.TipBoard.dto.TipRequestDTO;
+import com.devkduck.TipBoard.dto.TipSearchDto;
 import com.devkduck.TipBoard.service.TipBoardService;
 import com.devkduck.common.CustomResponse;
 import com.devkduck.user.auth.PrincipalDetails;
@@ -90,6 +91,12 @@ public class TipBoardController {
     @GetMapping("/page")
     public CustomResponse getListBoards(TipBoard tipBoard, @PageableDefault(size = 10 ) Pageable pageable){
         return CustomResponse.ok("페이징 ", tipBoardService.getListBoard(tipBoard,pageable));
+    }
+
+    //search
+    @GetMapping("/search")
+    public CustomResponse searchTip(TipSearchDto tipSearchDto){
+        return CustomResponse.ok("검색 성공", tipBoardService.searchTip(tipSearchDto));
     }
 
 }

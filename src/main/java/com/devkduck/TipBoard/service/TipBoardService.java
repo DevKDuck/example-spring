@@ -4,6 +4,7 @@ import com.devkduck.TipBoard.Mapper.TipBoardMapper;
 import com.devkduck.TipBoard.domain.TipBoard;
 import com.devkduck.TipBoard.dto.TipRequestDTO;
 import com.devkduck.TipBoard.dto.TipResponseDTO;
+import com.devkduck.TipBoard.dto.TipSearchDto;
 import com.devkduck.common.RequestList;
 import com.devkduck.mvc.domain.Board;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
@@ -65,5 +66,8 @@ public class TipBoardService {
         List<Map<String,Object>> content = tipBoardMapper.getListBoard(requestList);
         int total = tipBoardMapper.getListBoardCount(board);
         return new PageImpl<>(content, pageable, total);
+    }
+    public List<TipBoard> searchTip(TipSearchDto tipSearchDto){
+        return tipBoardMapper.searchTip(tipSearchDto);
     }
 }

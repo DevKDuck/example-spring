@@ -100,4 +100,21 @@
 
     </select>
 
+
+    <select id="searchTip" parameterType="com.devkduck.TipBoard.dto.TipSearchDto" resultType="com.devkduck.TipBoard.domain.TipBoard">
+        SELECT id
+             ,tipTitle
+             ,tipContents
+             ,tipHits
+             ,createdAt
+             ,updatedAt
+             ,tipWriter
+             ,userId
+        FROM tip_board
+        <where>
+            <if test="searchKey != null and searchKey != ''">
+                tipTitle LIKE CONCAT('%', #{searchKey}, '%')
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -45,4 +45,9 @@ public class TipController {
         return "/pageBoard";
     }
 
+    @GetMapping("/tip/search")
+    public String search(){
+        return "/searchBoard";
+    }
+
 }
