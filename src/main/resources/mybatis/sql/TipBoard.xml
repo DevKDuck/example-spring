@@ -117,4 +117,33 @@
             </if>
         </where>
     </select>
+
+    <select id="searchListBoards" parameterType="com.devkduck.common.RequestList" resultType="com.devkduck.TipBoard.domain.TipBoard">
+        SELECT id
+        ,tipTitle
+        ,tipContents
+        ,tipHits
+        ,createdAt
+        ,updatedAt
+        ,tipWriter
+        ,userId
+        FROM tip_board
+        <where>
+            <if test="data.searchKey != null and data.searchKey != ''">
+                tipTitle LIKE CONCAT('%', #{data.searchKey}, '%')
+            </if>
+        </where>
+        Limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <select id="getSearchListBoardsCount" parameterType="com.devkduck.TipBoard.dto.TipSearchDto" resultType="int">
+        SELECT COUNT(*) AS CNT
+        FROM tip_board
+        <where>
+            <if test="searchKey != null and searchKey != ''">
+                tipTitle LIKE CONCAT('%', #{searchKey}, '%')
+            </if>
+        </where>
+
+    </select>
 </mapper>

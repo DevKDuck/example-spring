@@ -50,4 +50,9 @@ public class TipController {
         return "/searchBoard";
     }
 
+    @GetMapping("/tip/search/page")
+    public String searchPage(){
+        return "/searchPage";
+    }
+
 }

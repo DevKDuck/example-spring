@@ -99,4 +99,9 @@ public class TipBoardController {
         return CustomResponse.ok("검색 성공", tipBoardService.searchTip(tipSearchDto));
     }
 
+    @GetMapping("/searchPage")
+    public CustomResponse searchListBoards(TipSearchDto tipSearchDto, @PageableDefault(size = 10) Pageable pageable){
+        return CustomResponse.ok("페이징 + 검색", tipBoardService.searchListBoards(tipSearchDto, pageable));
+    }
+
 }

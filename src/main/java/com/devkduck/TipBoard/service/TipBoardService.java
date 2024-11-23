@@ -70,4 +70,15 @@ public class TipBoardService {
     public List<TipBoard> searchTip(TipSearchDto tipSearchDto){
         return tipBoardMapper.searchTip(tipSearchDto);
     }
+
+    public Page<Map<String,Object>> searchListBoards(TipSearchDto tipSearchDto, Pageable pageable){
+        RequestList<?> requestList = RequestList.builder()
+                .data(tipSearchDto)
+                .pageable(pageable)
+                .build();
+        List<Map<String,Object>> content = tipBoardMapper.searchListBoards(requestList);
+        int total= tipBoardMapper.getSearchListBoardsCount(tipSearchDto);
+        return new PageImpl<>(content, pageable, total);
+
+    }
 }

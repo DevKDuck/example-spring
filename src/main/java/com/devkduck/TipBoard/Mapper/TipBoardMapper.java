@@ -31,4 +31,9 @@ public interface TipBoardMapper {
 
     //검색 기능
     List<TipBoard> searchTip(TipSearchDto searchDto);
+
+    List<Map<String,Object>> searchListBoards(RequestList<?> requestList);
+
+    int getSearchListBoardsCount(TipSearchDto searchDto);
+
 }
