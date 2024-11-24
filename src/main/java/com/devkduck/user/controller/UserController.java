@@ -29,7 +29,10 @@ public class UserController {
                 int result = principalDetailsService.register(userRegisterDTO);
                 if (result == 1) {
                     return CustomResponse.ok("등록 완료",null);
-                } else {
+                } else if (result == -1) {
+                    return CustomResponse.failure("이름이 중복되었습니다. 변경해주세요");
+                }
+                else {
                     return CustomResponse.failure("등록 실패");
                 }
             }

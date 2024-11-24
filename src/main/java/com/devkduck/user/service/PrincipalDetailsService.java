@@ -6,6 +6,7 @@ import com.devkduck.user.domain.User;
 import com.devkduck.user.domain.UserRegisterDTO;
 import com.devkduck.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,7 +34,13 @@ public class PrincipalDetailsService implements UserDetailsService {
         }
         userRegisterDTO.setPassword(bCryptPasswordEncoder.encode(userRegisterDTO.getPassword()));
         User user = User.createUser(userRegisterDTO);
-        return userMapper.save(user);
+        try{
+            return userMapper.save(user);
+        }
+        catch (DuplicateKeyException e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     //로그인
