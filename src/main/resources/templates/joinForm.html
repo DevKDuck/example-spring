@@ -58,11 +58,12 @@
         })
             .then(response => response.json())
             .then(resData => {
-                if (resData.status === 200) {
+                console.log(resData);
+                if (resData.code === 200) {
                     alert('회원가입이 완료되었습니다.');
                     window.location.href = '/loginForm';
                 } else {
-                    alert('회원가입 실패');
+                    alert(resData.message);
                 }
             })
             .catch(err => console.error('Error:', err));

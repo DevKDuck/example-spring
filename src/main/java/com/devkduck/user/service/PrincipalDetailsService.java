@@ -29,7 +29,7 @@ public class PrincipalDetailsService implements UserDetailsService {
         //유저 존재하는지 확인
         Optional<User> existUser = userMapper.findByEmail(userRegisterDTO.getEmail());
         if(existUser.isPresent()) {
-            throw new UsernameNotFoundException("email " + userRegisterDTO.getEmail() + " 이미 존재띠");
+            throw new UsernameNotFoundException(userRegisterDTO.getEmail() + "는 이미 존재합니다.");
         }
         userRegisterDTO.setPassword(bCryptPasswordEncoder.encode(userRegisterDTO.getPassword()));
         User user = User.createUser(userRegisterDTO);

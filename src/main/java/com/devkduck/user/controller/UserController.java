@@ -7,6 +7,7 @@ import com.devkduck.user.service.PrincipalDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +25,17 @@ public class UserController {
         if(bindingResult.hasErrors()){
             return CustomResponse.failure(bindingResult.getAllErrors().get(0).getDefaultMessage());
         }else {
-            int result = principalDetailsService.register(userRegisterDTO);
-            if (result == 1) {
-                System.out.println("등록되었습니다.");
-                return CustomResponse.ok("등록 완료",null);
-            } else {
-                return CustomResponse.failure("등록 실패");
+            try{
+                int result = principalDetailsService.register(userRegisterDTO);
+                if (result == 1) {
+                    return CustomResponse.ok("등록 완료",null);
+                } else {
+                    return CustomResponse.failure("등록 실패");
+                }
+            }
+            catch(UsernameNotFoundException e){
+                //이메일 중복 메시지 출력
+                return CustomResponse.failure(e.getMessage());
             }
         }
      }
