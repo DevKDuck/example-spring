@@ -5,25 +5,27 @@
 <mapper namespace="com.devkduck.TipBoard.Mapper.TipBoardMapper">
 
     <insert id="insertTip" parameterType="com.devkduck.TipBoard.domain.TipBoard" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO tip_board (tipTitle, tipWriter, tipContents, userId)
-        VALUES ( #{tipTitle}, #{tipWriter}, #{tipContents}, #{userId});
+        INSERT INTO tip_board (tipTitle, tipContents, userId)
+        VALUES ( #{tipTitle}, #{tipContents}, #{userId});
     </insert>
 
     <select id="getTipList" resultType="com.devkduck.TipBoard.domain.TipBoard">
         SELECT
-            id
-             , tipTitle
-             , tipContents
-             , tipHits
-             , createdAt
-             , updatedAt
-             , tipWriter
+            tb.id,
+            tb.tipTitle,
+            tb.tipContents,
+            tb.tipHits,
+            tb.createdAt,
+            tb.updatedAt,
+            u.name AS tipWriter
         FROM
-            tip_board
+            tip_board tb
+        INNER JOIN
+            user u ON tb.userId = u.id
         ORDER BY
-            id desc
-
+            id DESC
     </select>
+
 
     <update id = "updateHits" parameterType="Long">
         UPDATE
@@ -43,7 +45,6 @@
              ,tipHits
              ,createdAt
              ,updatedAt
-             ,tipWriter
              ,userId
         FROM
             tip_board
