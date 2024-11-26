@@ -39,17 +39,20 @@
 
     <select id="detailTip" resultType="com.devkduck.TipBoard.domain.TipBoard" parameterType="Long">
         SELECT
-            id
-             ,tipTitle
-             ,tipContents
-             ,tipHits
-             ,createdAt
-             ,updatedAt
-             ,userId
+          tb.id
+         ,tb.tipTitle
+         ,tb.tipContents
+         ,tb.tipHits
+         ,tb.createdAt
+         ,tb.updatedAt
+         ,tb.userId
+         ,u.name AS tipWriter
         FROM
-            tip_board
+            tip_board tb
+        INNER JOIN
+                User u ON tb.userId = u.id
         WHERE
-            id = #{id}
+            tb.id = #{id}
     </select>
 
     <update id = "updateTip" parameterType="map" >
